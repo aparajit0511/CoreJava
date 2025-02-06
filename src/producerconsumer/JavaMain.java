@@ -12,29 +12,38 @@ public class JavaMain {
 }
 
 class SharedResource{
-    private int number = 1;
-    private final int maxNum = 20;
+    private int number = 0;
+    private final int maxNum = 10;
+    private boolean isAvailable = false;
 
     public synchronized void Producer() throws InterruptedException{
-        while(number < 20){
-            if(number % 2 == 0){
+        while(number < maxNum){
+            while(isAvailable){ // Use while instead of if to avoid spurious wakeups
                 wait();
             }
             Thread.sleep(500);
-            System.out.println("Print Odd->"+ number);
             number += 1;
+            System.out.println("Produces number->"+ number);
+            isAvailable = true;
             notify();
         }
     }
 
     public synchronized void Consumer() throws InterruptedException{
-        while(number < 20){
-            if (number % 2 == 1){
+        while(number < maxNum){
+            while (!isAvailable){
                 wait();
             }
             Thread.sleep(500);
-            System.out.println("PRint Even->"+ number);
-            number += 1;
+            System.out.println("Consumes number->"+ number);
+            isAvailable = false;
+
+            notify();
+        }
+
+        // Ensure Producer does not wait indefinitely
+        // Prevents deadlock
+        synchronized (this) {
             notify();
         }
     }
