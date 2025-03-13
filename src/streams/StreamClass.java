@@ -1,3 +1,5 @@
+package streams;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -5,7 +7,7 @@ public class StreamClass {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
-        List<Integer> nums = Arrays.asList(1,2,3,4,5);
+        List<Integer> nums = Arrays.asList(1,2,7,3,11,4,5);
         System.out.println(nums);
 
         int sum = nums.stream().mapToInt(n->(int)n).sum();
@@ -30,9 +32,13 @@ public class StreamClass {
         List<String> result = names.stream().filter(n->n.length() >= 4).collect(Collectors.toList());
 
         System.out.println(result);
-        names.stream().filter(n->n.startsWith("C")).forEach(n->System.out.print(n + " "));
+        names.stream().filter(n->n.startsWith("C")).forEach(n->System.out.println(n + " "));
 
+        List<Integer> sorts = nums.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        System.out.println("sorted array"+ sorts);
 
+        List<String> sortsNames = names.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        System.out.println("Sorted names " + sortsNames);
 
     }
 }
