@@ -19,7 +19,9 @@ class SharedThread{
     public synchronized void printOdd() throws InterruptedException{
         while(number < 20){
             if (number % 2 == 0){
+                System.out.println("Hi odd");
                 wait();
+
             }
             System.out.println("Odd numbers ->"+ number);
             Thread.sleep(500);
@@ -31,7 +33,9 @@ class SharedThread{
     public synchronized void printEven() throws InterruptedException{
         while(number < 20){
             if(number % 2 == 1){
+                System.out.println("Hi even");
                 wait();
+
             }
             System.out.println("Even numbers ->"+ number );
             Thread.sleep(500);
